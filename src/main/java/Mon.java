@@ -7,6 +7,7 @@ public class Mon {
         System.out.println(horizontalLine);
         System.out.println("    Hello! I'm " + botName + "\n" + "    What can I do for you?");
         System.out.println(horizontalLine);
+        TaskManager taskManager = new TaskManager();
         Scanner in = new Scanner(System.in);
         while (true) {
             String userInput = in.nextLine();
@@ -14,7 +15,13 @@ public class Mon {
                 break;
             } else {
                 System.out.println(horizontalLine);
-                System.out.println("    " + userInput);
+                if (userInput.equals("list")){
+                    taskManager.printTasks();
+                }
+                else {
+                    Task newTask = new Task(userInput);
+                    taskManager.addTask(newTask);
+                }
                 System.out.println(horizontalLine);
             }
         }
