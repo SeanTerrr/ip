@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+//this bot is based off my girlfriend suggestions
 public class Mon {
     public static void main(String[] args) {
         String botName = "Mon";
@@ -13,10 +14,21 @@ public class Mon {
             String userInput = in.nextLine();
             if (userInput.equals("bye")) {
                 break;
-            } else {
+            }
+            else if (userInput.equals("list")){
                 System.out.println(horizontalLine);
-                if (userInput.equals("list")){
-                    taskManager.printTasks();
+                taskManager.printTasks();
+                System.out.println(horizontalLine);
+            }
+            else {
+                System.out.println(horizontalLine);
+                if (userInput.startsWith("mark")) {
+                    int taskId = Integer.parseInt(userInput.substring(5));
+                    taskManager.markTaskAsDone(taskId);
+                }
+                else if (userInput.startsWith("unmark")) {
+                    int taskId = Integer.parseInt(userInput.substring(7));
+                    taskManager.unmarkTaskAsDone(taskId);
                 }
                 else {
                     Task newTask = new Task(userInput);
@@ -26,7 +38,7 @@ public class Mon {
             }
         }
         System.out.println(horizontalLine);
-        System.out.println("    Bye. Hope to see you again soon!");
+        System.out.println("    If you still love me, come back :(");
         System.out.println(horizontalLine);
     }
 }

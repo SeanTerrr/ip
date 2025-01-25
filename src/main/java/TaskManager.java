@@ -22,7 +22,34 @@ public class TaskManager {
     public void printTasks() {
         for (int i = 0; i < numberOfTasks; i++) {
             int numberCount = i + 1;
-            System.out.println("    " + numberCount + ". " + taskList[i].getTaskName());
+            String checkBox;
+            if (taskList[i].getIsDone()){
+                checkBox = "[X]";
+            }
+            else {
+                checkBox = "[ ]";
+            }
+            System.out.println("    " + numberCount + "." + checkBox + " " + taskList[i].getTaskName());
+        }
+    }
+
+    public void markTaskAsDone(int taskId) {
+        if (taskId > numberOfTasks) {
+            System.out.println("    Please enter a valid task ID");
+        }
+        else {
+            taskList[taskId-1].setIsDone(true);
+            System.out.println("    Hmph! Took you long enough:\n      [X] " + taskList[taskId-1].getTaskName());
+        }
+    }
+
+    public void unmarkTaskAsDone(int taskId) {
+        if (taskId > numberOfTasks) {
+            System.out.println("    Please enter a valid task ID");
+        }
+        else {
+            taskList[taskId-1].setIsDone(false);
+            System.out.println("    Ugh, not done yet:\n      [ ] " +  taskList[taskId-1].getTaskName());
         }
     }
 }
