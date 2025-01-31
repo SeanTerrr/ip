@@ -1,6 +1,5 @@
 import java.util.Scanner;
 
-//this bot is based off my girlfriend suggestions
 public class Mon {
     public static void main(String[] args) {
         String botName = "Mon";
@@ -38,7 +37,7 @@ public class Mon {
             }
         }
         System.out.println(horizontalLine);
-        System.out.println("    If you still love me, come back :(");
+        System.out.println("    Bye! See you again!");
         System.out.println(horizontalLine);
     }
 }

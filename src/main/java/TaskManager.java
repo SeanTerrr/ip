@@ -39,7 +39,7 @@ public class TaskManager {
         }
         else {
             taskList[taskId-1].setIsDone(true);
-            System.out.println("    Hmph! Took you long enough:\n      [X] " + taskList[taskId-1].getTaskName());
+            System.out.println("    Nice! Marked as Done:\n      [X] " + taskList[taskId-1].getTaskName());
         }
     }
 
@@ -49,7 +49,7 @@ public class TaskManager {
         }
         else {
             taskList[taskId-1].setIsDone(false);
-            System.out.println("    Ugh, not done yet:\n      [ ] " +  taskList[taskId-1].getTaskName());
+            System.out.println("    Oh no! Unmarked:\n      [ ] " +  taskList[taskId-1].getTaskName());
         }
     }
 }
