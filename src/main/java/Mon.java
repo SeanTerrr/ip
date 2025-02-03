@@ -2,8 +2,8 @@ import java.util.Scanner;
 
 public class Mon {
     public static void main(String[] args) {
-        String botName = "Mon";
-        String horizontalLine = "   _______________________________";
+        final String botName = "Mon";
+        final String horizontalLine = "   _______________________________";
         System.out.println(horizontalLine);
         System.out.println("    Hello! I'm " + botName + "\n" + "    What can I do for you?");
         System.out.println(horizontalLine);
@@ -16,23 +16,12 @@ public class Mon {
             }
             else if (userInput.equals("list")){
                 System.out.println(horizontalLine);
-                taskManager.printTasks();
+                taskManager.printAllTasks();
                 System.out.println(horizontalLine);
             }
             else {
                 System.out.println(horizontalLine);
-                if (userInput.startsWith("mark")) {
-                    int taskId = Integer.parseInt(userInput.substring(5));
-                    taskManager.markTaskAsDone(taskId);
-                }
-                else if (userInput.startsWith("unmark")) {
-                    int taskId = Integer.parseInt(userInput.substring(7));
-                    taskManager.unmarkTaskAsDone(taskId);
-                }
-                else {
-                    Task newTask = new Task(userInput);
-                    taskManager.addTask(newTask);
-                }
+                taskManager.decodeCommand(userInput);
                 System.out.println(horizontalLine);
             }
         }
