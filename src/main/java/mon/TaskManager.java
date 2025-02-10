@@ -1,3 +1,9 @@
+package mon;
+
+import mon.tasktype.Deadline;
+import mon.tasktype.Event;
+import mon.tasktype.ToDo;
+
 public class TaskManager {
     private final Task[] taskList = new Task[100];
     private int numberOfTasks = 0;
@@ -39,6 +45,10 @@ public class TaskManager {
     public void decodeCommand(String command) {
         String[] commandArray = command.split(" ", 2);
         try {
+            if (commandArray.length < 2){
+                throw new MonException.InvalidCommandException();
+            }
+
             switch (commandArray[0]) {
             case "event":
                 addEvent(commandArray[1]);

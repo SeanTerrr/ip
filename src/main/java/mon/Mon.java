@@ -1,3 +1,5 @@
+package mon;
+
 import java.util.Scanner;
 
 public class Mon {

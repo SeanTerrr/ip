@@ -17,7 +17,7 @@
     Now you have 2 in the list.
    _______________________________
    _______________________________
-    Please enter a valid task ID
+    Please enter a valid task ID. There are currently 2 items in the list.
    _______________________________
    _______________________________
     Nice! Marked as Done:
@@ -47,6 +47,24 @@
     1.[T][ ] borrow book
     2.[D][ ] return book (by: Sunday)
     3.[E][X] project meeting(from: Mon 2pm to: 4pm)
+   _______________________________
+   _______________________________
+    Invalid command. Please use the correct format:
+
+    - mark <number> – Mark an item as completed
+    - unmark <number> – Unmark a completed item
+    - list – Show all items
+    - todo <item> – Add a to-do item
+    - deadline <task> /by <time> – Add a task with a deadline
+    - event <task> /from <start> /to <end> – Add an event with a start and end time
+
+    Check your input and try again!
+   _______________________________
+   _______________________________
+    Invalid deadline format. Use: deadline <task> /by <time>
+   _______________________________
+   _______________________________
+    Invalid event format. Use: event <task> /from <start> /to <end>
    _______________________________
    _______________________________
     Bye! See you again!

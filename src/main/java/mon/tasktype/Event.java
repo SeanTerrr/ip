@@ -1,3 +1,7 @@
+package mon.tasktype;
+
+import mon.Task;
+
 public class Event extends Task {
     private String eventStartTime;
     private String eventEndTime;

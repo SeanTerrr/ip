@@ -8,4 +8,7 @@ mark 3
 list
 unmark 2
 list
+error
+deadline test
+event test
 bye
