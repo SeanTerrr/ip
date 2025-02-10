@@ -18,21 +18,19 @@ public class TaskManager {
         }
     }
 
-    public void markTaskAsDone(int taskId) {
+    public void markTaskAsDone(int taskId) throws MonException.InvalidTaskNumberException {
         if (taskId > numberOfTasks) {
-            System.out.println("    Please enter a valid task ID");
-        }
-        else {
+            throw new MonException.InvalidTaskNumberException(numberOfTasks);
+        } else {
             taskList[taskId-1].markAsDone();
             System.out.println(taskList[taskId-1]);
         }
     }
 
-    public void unmarkTaskAsDone(int taskId) {
+    public void unmarkTaskAsDone(int taskId) throws MonException.InvalidTaskNumberException {
         if (taskId > numberOfTasks) {
-            System.out.println("    Please enter a valid task ID");
-        }
-        else {
+            throw new MonException.InvalidTaskNumberException(numberOfTasks);
+        } else {
             taskList[taskId-1].unmarkAsDone();
             System.out.println(taskList[taskId-1]);
         }
@@ -40,47 +38,50 @@ public class TaskManager {
 
     public void decodeCommand(String command) {
         String[] commandArray = command.split(" ", 2);
-        switch (commandArray[0]) {
-        case "event":
-            addEvent(commandArray[1]);
-            break;
-        case "deadline":
-            addDeadline(commandArray[1]);
-            break;
-        case "todo":
-            addTodo(commandArray[1]);
-            break;
-        case "unmark":
-            unmarkTaskAsDone(Integer.parseInt(commandArray[1]));
-            break;
-        case "mark":
-            markTaskAsDone(Integer.parseInt(commandArray[1]));
-            break;
-        default:
-            System.out.println("Invalid command");
+        try {
+            switch (commandArray[0]) {
+            case "event":
+                addEvent(commandArray[1]);
+                break;
+            case "deadline":
+                addDeadline(commandArray[1]);
+                break;
+            case "todo":
+                addTodo(commandArray[1]);
+                break;
+            case "unmark":
+                unmarkTaskAsDone(Integer.parseInt(commandArray[1]));
+                break;
+            case "mark":
+                markTaskAsDone(Integer.parseInt(commandArray[1]));
+                break;
+            default:
+                throw new MonException.InvalidCommandException();
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    public void addTodo(String description){
+    public void addTodo(String description) {
         taskList[numberOfTasks] = new ToDo(description);
         printAddedText(taskList[numberOfTasks++]);
     }
 
-    public void addDeadline(String description){
+    public void addDeadline(String description) throws MonException.InvalidDeadlineException{
         String[] deadlineParts = description.split(" /by", 2);
         if (deadlineParts.length < 2) {
-            System.out.println("Invalid deadline format. Use: deadline <task> /by <time>");
-            return;
+            throw new MonException.InvalidDeadlineException();
         }
         taskList[numberOfTasks] = new Deadline(deadlineParts[0],deadlineParts[1]);
         printAddedText(taskList[numberOfTasks++]);
     }
 
-    public void addEvent(String description){
+    public void addEvent(String description) throws MonException.InvalidEventException{
         String[] eventParts = description.split(" /from | /to", 3);
         if (eventParts.length < 3) {
-            System.out.println("Invalid event format. Use: event <task> /from <start> /to <end>");
-            return;
+            throw new MonException.InvalidEventException();
         }
         taskList[numberOfTasks] = new Event(eventParts[0],eventParts[1],eventParts[2]);
         printAddedText(taskList[numberOfTasks++]);

@@ -13,13 +13,11 @@ public class Mon {
             String userInput = in.nextLine();
             if (userInput.equals("bye")) {
                 break;
-            }
-            else if (userInput.equals("list")){
+            } else if (userInput.equals("list")){
                 System.out.println(horizontalLine);
                 taskManager.printAllTasks();
                 System.out.println(horizontalLine);
-            }
-            else {
+            } else {
                 System.out.println(horizontalLine);
                 taskManager.decodeCommand(userInput);
                 System.out.println(horizontalLine);
