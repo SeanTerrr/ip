@@ -4,10 +4,10 @@ import mon.Task;
 
 public class Deadline extends Task {
     private String deadline;
-    public Deadline(String taskName, String deadline){
+    public Deadline(String taskName, String deadline, Boolean isDone){
         super(taskName);
         this.deadline = deadline;
-        this.isDone = false;
+        this.isDone = isDone;
     }
 
     public String getDeadline() {
@@ -20,6 +20,11 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by:" + deadline + ")";
+        return "[D]" + super.toString() + " (by: " + deadline + ")";
+    }
+
+    @Override
+    public String convertToWriteFormat() {
+        return "D | " + super.convertToWriteFormat() + " /by " + deadline + System.lineSeparator();
     }
 }

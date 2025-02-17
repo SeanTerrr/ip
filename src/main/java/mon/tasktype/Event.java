@@ -5,11 +5,11 @@ import mon.Task;
 public class Event extends Task {
     private String eventStartTime;
     private String eventEndTime;
-    public Event(String eventName, String eventStartTime, String eventEndTime) {
+    public Event(String eventName, String eventStartTime, String eventEndTime, Boolean isDone) {
         super(eventName);
         this.eventStartTime = eventStartTime;
         this.eventEndTime = eventEndTime;
-        this.isDone = false;
+        this.isDone = isDone;
     }
 
     public String getEventStartTime() {
@@ -30,6 +30,11 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + "(from: " + eventStartTime + " to:" + eventEndTime + ")";
+        return "[E]" + super.toString() + " (from: " + eventStartTime + " to: " + eventEndTime + ")";
+    }
+
+    @Override
+    public String convertToWriteFormat() {
+        return "E | " + super.convertToWriteFormat() + " /from " + eventEndTime + " /to " + eventStartTime + System.lineSeparator();
     }
 }
