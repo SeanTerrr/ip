@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class MonFile {
     private File monFile;
-    private final String dataPath = "src/main/java/mon/MonData.txt";
+    private final String dataPath = "Data/MonData.txt";
 
     public MonFile() {
         monFile = new File(dataPath);
