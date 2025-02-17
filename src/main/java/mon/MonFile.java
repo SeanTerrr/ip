@@ -7,10 +7,32 @@ import java.io.IOException;
 
 public class MonFile {
     private File monFile;
-    private final String dataPath = "Data/MonData.txt";
+    private final String dataPath = "./data/MonData.txt";
 
     public MonFile() {
+        File dir = new File("./data"); // Separate directory creation
+        if (!dir.exists()) {
+            if (dir.mkdirs()) {
+                System.out.println("Directory created: " + dir.getAbsolutePath());
+            } else {
+                System.out.println("Failed to create directory!");
+            }
+        }
+
         monFile = new File(dataPath);
+
+        if (!monFile.exists()) {
+            try {
+                if (monFile.createNewFile()) {
+                    System.out.println("    File created: " + monFile.getAbsolutePath());
+                } else {
+                    System.out.println("    File already exists at: " + monFile.getAbsolutePath());
+                }
+            } catch (IOException e) {
+                System.out.println("    An error occurred while creating the file.");
+                e.printStackTrace();
+            }
+        }
     }
 
     public void writeToFile(Task task)  throws IOException {
