@@ -3,13 +3,18 @@ package mon.tasktype;
 import mon.Task;
 
 public class ToDo extends Task {
-    public ToDo(String taskName){
+    public ToDo(String taskName, Boolean isDone){
         super(taskName);
-        isDone = false;
+        this.isDone = isDone;
     }
 
     @Override
     public String toString() {
         return "[T]" + super.toString();
+    }
+
+    @Override
+    public String convertToWriteFormat() {
+        return "T | " + super.convertToWriteFormat() + System.lineSeparator();
     }
 }

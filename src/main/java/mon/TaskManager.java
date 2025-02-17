@@ -8,25 +8,22 @@ import java.util.ArrayList;
 public class TaskManager {
     private final ArrayList<Task> taskList = new ArrayList<>();
 
-    public TaskManager() {
-    }
-
+    public TaskManager() {}
     public void decodeCommand(String command) {
         String[] commandArray = command.split(" ", 2);
         try {
             if (commandArray.length < 2){
                 throw new MonException.InvalidCommandException();
             }
-
             switch (commandArray[0]) {
             case "event":
-                addEvent(commandArray[1]);
+                addEvent(commandArray[1],false,true);
                 break;
             case "deadline":
-                addDeadline(commandArray[1]);
+                addDeadline(commandArray[1],false,true);
                 break;
             case "todo":
-                addTodo(commandArray[1]);
+                addTodo(commandArray[1],false);
                 break;
             case "unmark":
                 unmarkTaskAsDone(Integer.parseInt(commandArray[1]));
@@ -72,27 +69,56 @@ public class TaskManager {
         }
     }
 
-    public void addTodo(String description) {
-        taskList.add(new ToDo(description));
+    public void addTodo(String description, Boolean isDone) {
+        taskList.add(new ToDo(description, isDone));
         printAddedText(taskList.get(taskList.size()-1));
     }
 
-    public void addDeadline(String description) throws MonException.InvalidDeadlineException{
+    public void addDeadline(String description, Boolean isDone, Boolean printText)
+            throws MonException.InvalidDeadlineException, MonException.InvalidWriteCommandException {
         String[] deadlineParts = description.split(" /by", 2);
         if (deadlineParts.length < 2) {
-            throw new MonException.InvalidDeadlineException();
+            if (printText) {
+                throw new MonException.InvalidDeadlineException();
+            }
+            else {
+                throw new MonException.InvalidWriteCommandException(description);
+            }
         }
-        taskList.add(new Deadline(deadlineParts[0],deadlineParts[1]));
+
+        //trim leading spaces in the array
+        for (int i = 0; i < deadlineParts.length; i++) {
+            deadlineParts[i] = deadlineParts[i].trim();
+        }
+        taskList.add(new Deadline(deadlineParts[0],deadlineParts[1], isDone));
+        taskList.add(new Deadline(deadlineParts[0],deadlineParts[1],isDone));
         printAddedText(taskList.get(taskList.size()-1));
+
+        if (printText){
+            printAddedText(taskList.get(taskList.size()-1));
+        }
     }
 
-    public void addEvent(String description) throws MonException.InvalidEventException{
+    public void addEvent(String description, Boolean isDone, Boolean printText)
+            throws MonException.InvalidEventException, MonException.InvalidWriteCommandException{
+
         String[] eventParts = description.split(" /from | /to", 3);
         if (eventParts.length < 3) {
-            throw new MonException.InvalidEventException();
+            if (printText){
+                throw new MonException.InvalidEventException();
+            }
+            else {
+                throw new MonException.InvalidWriteCommandException(description);
+            }
         }
-        taskList.add(new Event(eventParts[0],eventParts[1],eventParts[2]));
-        printAddedText(taskList.get(taskList.size()-1));
+        for (int i = 0; i < eventParts.length; i++) {
+            eventParts[i] = eventParts[i].trim();
+        }
+        taskList.add(new Event(eventParts[0],eventParts[1],eventParts[2],isDone));
+
+        if (printText) {
+            printAddedText(taskList.get(taskList.size() - 1));
+        }
     }
 
     public void printAddedText(Task task){

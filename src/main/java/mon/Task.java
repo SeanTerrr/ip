@@ -39,4 +39,9 @@ public class Task {
     public String toString() {
         return "[" + getStatusIcon() + "] " + taskName;
     }
+
+    public String convertToWriteFormat() {
+        String statusIcon = isDone ? "X" : "O";
+        return statusIcon + " | " + taskName;
+    }
 }
