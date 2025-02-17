@@ -1,2 +1,0 @@
-T | O | test1
-E | X | test3 /from 9pm /to 10pm
