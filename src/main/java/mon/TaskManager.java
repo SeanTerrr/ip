@@ -23,7 +23,7 @@ public class TaskManager {
                 addDeadline(commandArray[1],false,true);
                 break;
             case "todo":
-                addTodo(commandArray[1],false);
+                addTodo(commandArray[1],false,true);
                 break;
             case "unmark":
                 unmarkTaskAsDone(Integer.parseInt(commandArray[1]));
@@ -69,9 +69,11 @@ public class TaskManager {
         }
     }
 
-    public void addTodo(String description, Boolean isDone) {
+    public void addTodo(String description, Boolean isDone, Boolean printText) {
         taskList.add(new ToDo(description, isDone));
-        printAddedText(taskList.get(taskList.size()-1));
+        if (printText){
+            printAddedText(taskList.get(taskList.size()-1));
+        }
     }
 
     public void addDeadline(String description, Boolean isDone, Boolean printText)
@@ -91,8 +93,6 @@ public class TaskManager {
             deadlineParts[i] = deadlineParts[i].trim();
         }
         taskList.add(new Deadline(deadlineParts[0],deadlineParts[1], isDone));
-        taskList.add(new Deadline(deadlineParts[0],deadlineParts[1],isDone));
-        printAddedText(taskList.get(taskList.size()-1));
 
         if (printText){
             printAddedText(taskList.get(taskList.size()-1));
@@ -139,5 +139,17 @@ public class TaskManager {
     public void printDeletedText(Task task){
         System.out.println("    Got it. I've deleted this task:");
         System.out.println("      " + task);
+    }
+
+    public void executeByeCommand(MonFile monFile) {
+        try {
+            monFile.clearFileContent();
+            for (Task task : taskList) {
+                monFile.writeToFile(task);
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

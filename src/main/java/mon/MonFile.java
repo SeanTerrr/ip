@@ -24,6 +24,9 @@ public class MonFile {
         Scanner s = new Scanner(monFile);
         while (s.hasNextLine()) {
             String currentLine = s.nextLine();
+            if (currentLine.isEmpty()) {
+                continue;
+            }
             String[] taskParts = currentLine.split(" \\| ");
             if (taskParts.length != 3 || (!taskParts[1].equals("X") && !taskParts[1].equals("O"))) {
                 throw new MonException.InvalidWriteCommandException(currentLine);
@@ -31,7 +34,7 @@ public class MonFile {
             Boolean isDone = taskParts[1].equals("X");
             switch (taskParts[0]) {
             case "T":
-                taskManager.addTodo(taskParts[2], isDone, false);
+                taskManager.addTodo(taskParts[2], isDone,false);
                 break;
             case "D":
                 taskManager.addDeadline(taskParts[2], isDone, false);

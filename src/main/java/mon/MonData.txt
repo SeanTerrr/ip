@@ -1,4 +1,2 @@
 T | O | test1
-E | O | test2 /from 7pm /to 9pm
-D | X | test3 /by 9pm
-T | X | test4
+E | X | test3 /from 9pm /to 10pm
