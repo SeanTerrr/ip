@@ -6,14 +6,9 @@ import mon.tasktype.ToDo;
 import java.util.ArrayList;
 
 public class TaskManager {
-    private final ArrayList<Task> taskList = new ArrayList<Task>();
-    final String horizontalLine = "   _______________________________";
+    private final ArrayList<Task> taskList = new ArrayList<>();
 
     public TaskManager() {
-    }
-
-    public int getNumberOfTasks() {
-        return taskList.size();
     }
 
     public void decodeCommand(String command) {
