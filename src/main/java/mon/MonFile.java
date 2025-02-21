@@ -1,4 +1,8 @@
 package mon;
+import mon.exception.InvalidDeadlineException;
+import mon.exception.InvalidEventException;
+import mon.exception.InvalidWriteCommandException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -42,7 +46,7 @@ public class MonFile {
     }
 
     public void addDataToTaskManager(TaskManager taskManager)
-            throws MonException.InvalidWriteCommandException, FileNotFoundException, MonException.InvalidEventException, MonException.InvalidDeadlineException {
+            throws InvalidWriteCommandException, FileNotFoundException, InvalidEventException, InvalidDeadlineException {
         Scanner s = new Scanner(monFile);
         while (s.hasNextLine()) {
             String currentLine = s.nextLine();
@@ -51,7 +55,7 @@ public class MonFile {
             }
             String[] taskParts = currentLine.split(" \\| ");
             if (taskParts.length != 3 || (!taskParts[1].equals("X") && !taskParts[1].equals("O"))) {
-                throw new MonException.InvalidWriteCommandException(currentLine);
+                throw new InvalidWriteCommandException(currentLine);
             }
             Boolean isDone = taskParts[1].equals("X");
             switch (taskParts[0]) {
@@ -65,7 +69,7 @@ public class MonFile {
                 taskManager.addEvent(taskParts[2], isDone, false);
                 break;
             default:
-                throw new MonException.InvalidWriteCommandException(currentLine);
+                throw new InvalidWriteCommandException(currentLine);
             }
         }
     }

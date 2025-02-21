@@ -6,9 +6,17 @@ import java.util.Scanner;
 public class Mon {
     public static void main(String[] args) {
         final String botName = "Mon";
+        final String logo = "\n" +
+                "   .___  ___.   ______   .__   __. \n" +
+                "   |   \\/   |  /  __  \\  |  \\ |  | \n" +
+                "   |  \\  /  | |  |  |  | |   \\|  | \n" +
+                "   |  |\\/|  | |  |  |  | |  . `  | \n" +
+                "   |  |  |  | |  `--'  | |  |\\   | \n" +
+                "   |__|  |__|  \\______/  |__| \\__| \n" +
+                "                                \n";
         final String horizontalLine = "   _______________________________";
         System.out.println(horizontalLine);
-        System.out.println("    Hello! I'm " + botName + "\n" + "    What can I do for you?");
+        System.out.println(logo + "    Hello! I'm " + botName + "\n" + "    What can I do for you?");
         System.out.println(horizontalLine);
         TaskManager taskManager = new TaskManager();
         Scanner in = new Scanner(System.in);

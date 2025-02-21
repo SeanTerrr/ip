@@ -1,5 +1,6 @@
 package mon;
 
+import mon.exception.*;
 import mon.tasktype.Deadline;
 import mon.tasktype.Event;
 import mon.tasktype.ToDo;
@@ -13,7 +14,7 @@ public class TaskManager {
         String[] commandArray = command.split(" ", 2);
         try {
             if (commandArray.length < 2){
-                throw new MonException.InvalidCommandException();
+                throw new InvalidCommandException();
             }
             switch (commandArray[0]) {
             case "event":
@@ -35,7 +36,7 @@ public class TaskManager {
                 deleteTask(Integer.parseInt(commandArray[1]));
                 break;
             default:
-                throw new MonException.InvalidCommandException();
+                throw new InvalidCommandException();
             }
         }
         catch (Exception e) {
@@ -51,18 +52,18 @@ public class TaskManager {
         }
     }
 
-    public void markTaskAsDone(int taskId) throws MonException.InvalidTaskNumberException {
+    public void markTaskAsDone(int taskId) throws InvalidTaskNumberException {
         if (taskId > taskList.size()) {
-            throw new MonException.InvalidTaskNumberException(taskList.size());
+            throw new InvalidTaskNumberException(taskList.size());
         } else {
             taskList.get(taskId-1).markAsDone();
             System.out.println(taskList.get(taskId-1));
         }
     }
 
-    public void unmarkTaskAsDone(int taskId) throws MonException.InvalidTaskNumberException {
+    public void unmarkTaskAsDone(int taskId) throws InvalidTaskNumberException {
         if (taskId > taskList.size()) {
-            throw new MonException.InvalidTaskNumberException(taskList.size());
+            throw new InvalidTaskNumberException(taskList.size());
         } else {
             taskList.get(taskId-1).unmarkAsDone();
             System.out.println(taskList.get(taskId-1));
@@ -77,14 +78,14 @@ public class TaskManager {
     }
 
     public void addDeadline(String description, Boolean isDone, Boolean printText)
-            throws MonException.InvalidDeadlineException, MonException.InvalidWriteCommandException {
+            throws InvalidDeadlineException, InvalidWriteCommandException {
         String[] deadlineParts = description.split(" /by", 2);
         if (deadlineParts.length < 2) {
             if (printText) {
-                throw new MonException.InvalidDeadlineException();
+                throw new InvalidDeadlineException();
             }
             else {
-                throw new MonException.InvalidWriteCommandException(description);
+                throw new InvalidWriteCommandException(description);
             }
         }
 
@@ -100,15 +101,15 @@ public class TaskManager {
     }
 
     public void addEvent(String description, Boolean isDone, Boolean printText)
-            throws MonException.InvalidEventException, MonException.InvalidWriteCommandException{
+            throws InvalidEventException, InvalidWriteCommandException{
 
         String[] eventParts = description.split(" /from | /to", 3);
         if (eventParts.length < 3) {
             if (printText){
-                throw new MonException.InvalidEventException();
+                throw new InvalidEventException();
             }
             else {
-                throw new MonException.InvalidWriteCommandException(description);
+                throw new InvalidWriteCommandException(description);
             }
         }
         for (int i = 0; i < eventParts.length; i++) {
@@ -127,9 +128,9 @@ public class TaskManager {
         System.out.println("    Now you have " + taskList.size() + " tasks in the list.");
     }
 
-    public void deleteTask(int taskId) throws MonException.InvalidTaskNumberException {
+    public void deleteTask(int taskId) throws InvalidTaskNumberException {
         if (taskId > taskList.size()) {
-            throw new MonException.InvalidTaskNumberException(taskList.size());
+            throw new InvalidTaskNumberException(taskList.size());
         }
         printDeletedText(taskList.get(taskId-1));
         taskList.remove(taskId-1);
