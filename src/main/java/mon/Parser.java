@@ -25,6 +25,12 @@ public class Parser {
             if (commandArray.length < 2) {
                 throw new InvalidCommandException();
             }
+            commandArray[1] = commandArray[1].trim();
+
+            if (commandArray[1].isEmpty()) {
+                throw new InvalidCommandException();
+            }
+
             switch (commandArray[0]) {
             case "schedule":
                 taskManager.executeScheduleCommand(commandArray[1]);
