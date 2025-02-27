@@ -44,8 +44,7 @@ public class Mon {
                     ui.printLine();
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         ui.printByeStatement();

@@ -6,15 +6,17 @@ package mon.tasktype;
 public class Task {
     protected String taskName;
     protected Boolean isDone;
-
+    protected String identifier;
     /**
      * Creates a new Task.
      *
      * @param taskName The name of the task.
+     * @param identifier The type of task
      */
-    public Task(String taskName) {
+    public Task(String taskName, String identifier) {
         this.taskName = taskName;
         this.isDone = false;
+        this.identifier = identifier;
     }
 
     public String getTaskName() {
@@ -49,6 +51,14 @@ public class Task {
     }
 
     /**
+     * Gets the identifier for the task.
+     *
+     * @return "T", "D", "E" depending on the type of task
+     */
+    public String getIdentifier() {
+        return identifier;
+    }
+    /**
      * Returns a string representation of the Task.
      * Format: [status] TaskName
      *
@@ -56,7 +66,7 @@ public class Task {
      */
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + taskName;
+        return "[" + identifier + "][" + getStatusIcon() + "] " + taskName;
     }
 
     /**
@@ -67,6 +77,6 @@ public class Task {
      */
     public String convertToWriteFormat() {
         String statusIcon = isDone ? "X" : "O";
-        return statusIcon + " | " + taskName;
+        return identifier + " | " + statusIcon + " | " + taskName;
     }
 }

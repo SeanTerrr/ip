@@ -14,9 +14,10 @@ public class Deadline extends Task {
      * @param isDone   Whether the task is completed (true) or not (false).
      */
     public Deadline(String taskName, LocalDate deadline, Boolean isDone){
-        super(taskName);
+        super(taskName,"D");
         this.deadline = deadline;
         this.isDone = isDone;
+
     }
 
     /**
@@ -28,7 +29,7 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + deadline.format(DateTimeFormatter.ofPattern("d MMM yyyy")) + ")";
+        return super.toString() + " (by: " + deadline.format(DateTimeFormatter.ofPattern("d MMM yyyy")) + ")";
     }
 
     /**
@@ -39,6 +40,6 @@ public class Deadline extends Task {
      */
     @Override
     public String convertToWriteFormat() {
-        return "D | " + super.convertToWriteFormat() + " /by " + deadline + System.lineSeparator();
+        return super.convertToWriteFormat() + " /by " + deadline + System.lineSeparator();
     }
 }

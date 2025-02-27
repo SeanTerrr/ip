@@ -20,7 +20,7 @@ public class Event extends Task {
      * @param isDone        Whether the event task is completed (true) or not (false).
      */
     public Event(String eventName, LocalDateTime eventStartTime, LocalDateTime eventEndTime, Boolean isDone) {
-        super(eventName);
+        super(eventName,"E");
         this.eventStartTime = eventStartTime;
         this.eventEndTime = eventEndTime;
         this.isDone = isDone;
@@ -34,7 +34,7 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: "
+        return super.toString() + " (from: "
                 + eventStartTime.format(DateTimeFormatter.ofPattern("d MMM yyyy h:mma")) + " to: "
                 + eventEndTime.format(DateTimeFormatter.ofPattern("d MMM yyyy h:mma")) + ")";
     }
@@ -47,6 +47,6 @@ public class Event extends Task {
      */
     @Override
     public String convertToWriteFormat() {
-        return "E | " + super.convertToWriteFormat() + " /from " + eventStartTime + " /to " + eventEndTime + System.lineSeparator();
+        return super.convertToWriteFormat() + " /from " + eventStartTime + " /to " + eventEndTime + System.lineSeparator();
     }
 }

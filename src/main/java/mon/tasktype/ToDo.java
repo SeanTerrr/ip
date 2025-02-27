@@ -13,19 +13,8 @@ public class ToDo extends Task {
      * @param isDone   Whether the task is completed (true) or not (false).
      */
     public ToDo(String taskName, Boolean isDone) {
-        super(taskName);
+        super(taskName,"T");
         this.isDone = isDone;
-    }
-
-    /**
-     * Returns a string representation of the ToDo task.
-     * Format: [T][status] TaskName
-     *
-     * @return The formatted string representing the to-do task.
-     */
-    @Override
-    public String toString() {
-        return "[T]" + super.toString();
     }
 
     /**
@@ -36,6 +25,6 @@ public class ToDo extends Task {
      */
     @Override
     public String convertToWriteFormat() {
-        return "T | " + super.convertToWriteFormat() + System.lineSeparator();
+        return super.convertToWriteFormat() + System.lineSeparator();
     }
 }

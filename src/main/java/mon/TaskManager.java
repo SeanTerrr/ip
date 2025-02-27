@@ -175,11 +175,14 @@ public class TaskManager {
             throw new InvalidTaskNumberException(taskList.size());
         }
         Task taskToDelete = taskList.get(taskId-1);
-        LocalDate date = dateMap.get(taskToDelete);
-        dateMap.remove(taskToDelete);
-        taskMap.get(date).remove(taskToDelete);
-        if (taskMap.get(date).isEmpty()) {
-            taskMap.remove(date);
+
+        if (taskToDelete.getIdentifier().equals("D") || taskToDelete.getIdentifier().equals("E")) {
+            LocalDate date = dateMap.get(taskToDelete);
+            dateMap.remove(taskToDelete);
+            taskMap.get(date).remove(taskToDelete);
+            if (taskMap.get(date).isEmpty()) {
+                taskMap.remove(date);
+            }
         }
 
         ui.printDeletedText(taskList.get(taskId-1));
@@ -198,8 +201,7 @@ public class TaskManager {
             for (Task task : taskList) {
                 monFile.writeToFile(task);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
