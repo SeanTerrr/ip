@@ -2,7 +2,7 @@
 
 ## Overview
 
-Mon is a simple command-line task manager that allows you to create, view, mark, unmark, and delete tasks, as well as manage tasks based on specific criteria such as deadlines, events, and schedules. The app supports reading from and writing to a file for persistence and also allows searching for tasks using keywords.
+Mon is a simple command-line task manager that allows you to create, view, mark, unmark, and delete tasks, as well as manage tasks based on specific criteria such as deadlines, events, and schedules. The app supports reading from and writing to a file and also allows searching for tasks using keywords.
 
 ### Key Features:
 - **Add Tasks**: Create tasks of various types (To-Do, Deadline, Event).
@@ -10,7 +10,7 @@ Mon is a simple command-line task manager that allows you to create, view, mark,
 - **Delete Tasks**: Remove tasks from the list.
 - **View All Tasks**: List all tasks in your task manager.
 - **Search Tasks**: Find tasks based on keywords.
-- **Schedule Tasks**: View tasks scheduled for a specific date.
+- **Scheduled Tasks**: View tasks scheduled for a specific date.
 
 ## Commands
 
