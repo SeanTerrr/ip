@@ -9,6 +9,7 @@ public class InvalidCommandException extends Exception {
                 "\n    - todo <item> – Add a to-do item" +
                 "\n    - deadline <task> /by <time> – Add a task with a deadline" +
                 "\n    - event <task> /from <start> /to <end> – Add an event with a start and end time" +
+                "\n    - find <keyword> - Findl all matching tasks" +
                 "\n\n    Check your input and try again!");
     }
 }

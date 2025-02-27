@@ -32,6 +32,9 @@ public class Parser {
             case "delete":
                 taskManager.deleteTask(Integer.parseInt(commandArray[1]));
                 break;
+            case "find":
+                taskManager.executeFindCommand(commandArray[1]);
+                break;
             default:
                 throw new InvalidCommandException();
             }
