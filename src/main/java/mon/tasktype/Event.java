@@ -1,38 +1,27 @@
 package mon.tasktype;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Event extends Task {
-    private String eventStartTime;
-    private String eventEndTime;
-    public Event(String eventName, String eventStartTime, String eventEndTime, Boolean isDone) {
+    private LocalDateTime eventStartTime;
+    private LocalDateTime eventEndTime;
+    public Event(String eventName, LocalDateTime eventStartTime, LocalDateTime eventEndTime, Boolean isDone) {
         super(eventName);
         this.eventStartTime = eventStartTime;
         this.eventEndTime = eventEndTime;
         this.isDone = isDone;
     }
 
-    public String getEventStartTime() {
-        return eventStartTime;
-    }
-
-    public void setEventStartTime(String eventStartTime) {
-        this.eventStartTime = eventStartTime;
-    }
-
-    public String getEventEndTime() {
-        return eventEndTime;
-    }
-
-    public void setEventEndTime(String eventEndTime) {
-        this.eventEndTime = eventEndTime;
-    }
-
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + eventStartTime + " to: " + eventEndTime + ")";
+        return "[E]" + super.toString() + " (from: "
+                + eventStartTime.format(DateTimeFormatter.ofPattern("d MMM yyyy h:mma")) + " to: "
+                + eventEndTime.format(DateTimeFormatter.ofPattern("d MMM yyyy h:mma")) + ")";
     }
 
     @Override
     public String convertToWriteFormat() {
-        return "E | " + super.convertToWriteFormat() + " /from " + eventEndTime + " /to " + eventStartTime + System.lineSeparator();
+        return "E | " + super.convertToWriteFormat() + " /from " + eventStartTime + " /to " + eventEndTime + System.lineSeparator();
     }
 }

@@ -1,4 +1,5 @@
 package mon;
+import mon.exception.InvalidDateTimeFormat;
 import mon.exception.InvalidDeadlineException;
 import mon.exception.InvalidEventException;
 import mon.exception.InvalidWriteCommandException;
@@ -47,7 +48,8 @@ public class Storage {
     }
 
     public void addDataToTaskManager(TaskManager taskManager)
-            throws InvalidWriteCommandException, FileNotFoundException, InvalidEventException, InvalidDeadlineException {
+            throws InvalidWriteCommandException, FileNotFoundException,
+            InvalidEventException, InvalidDeadlineException, InvalidDateTimeFormat {
         Scanner s = new Scanner(monFile);
         while (s.hasNextLine()) {
             String currentLine = s.nextLine();

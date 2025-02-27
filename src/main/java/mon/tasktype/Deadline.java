@@ -1,24 +1,19 @@
 package mon.tasktype;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Deadline extends Task {
-    private String deadline;
-    public Deadline(String taskName, String deadline, Boolean isDone){
+    private LocalDate deadline;
+    public Deadline(String taskName, LocalDate deadline, Boolean isDone){
         super(taskName);
         this.deadline = deadline;
         this.isDone = isDone;
     }
 
-    public String getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(String deadline) {
-        this.deadline = deadline;
-    }
-
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + deadline + ")";
+        return "[D]" + super.toString() + " (by: " + deadline.format(DateTimeFormatter.ofPattern("d MMM yyyy")) + ")";
     }
 
     @Override
