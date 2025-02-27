@@ -3,45 +3,17 @@ package mon;
 import mon.exception.*;
 import mon.tasktype.Deadline;
 import mon.tasktype.Event;
+import mon.tasktype.Task;
 import mon.tasktype.ToDo;
 import java.util.ArrayList;
 
 public class TaskManager {
-    private final ArrayList<Task> taskList = new ArrayList<>();
+    private Ui ui;
+    private ArrayList<Task> taskList;
 
-    public TaskManager() {}
-    public void decodeCommand(String command) {
-        String[] commandArray = command.split(" ", 2);
-        try {
-            if (commandArray.length < 2){
-                throw new InvalidCommandException();
-            }
-            switch (commandArray[0]) {
-            case "event":
-                addEvent(commandArray[1],false,true);
-                break;
-            case "deadline":
-                addDeadline(commandArray[1],false,true);
-                break;
-            case "todo":
-                addTodo(commandArray[1],false,true);
-                break;
-            case "unmark":
-                unmarkTaskAsDone(Integer.parseInt(commandArray[1]));
-                break;
-            case "mark":
-                markTaskAsDone(Integer.parseInt(commandArray[1]));
-                break;
-            case "delete":
-                deleteTask(Integer.parseInt(commandArray[1]));
-                break;
-            default:
-                throw new InvalidCommandException();
-            }
-        }
-        catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    public TaskManager() {
+        taskList = new ArrayList<>();
+        ui = new Ui();
     }
 
     public void printAllTasks() {
@@ -73,7 +45,7 @@ public class TaskManager {
     public void addTodo(String description, Boolean isDone, Boolean printText) {
         taskList.add(new ToDo(description, isDone));
         if (printText){
-            printAddedText(taskList.get(taskList.size()-1));
+            ui.printAddedText(taskList.get(taskList.size()-1),taskList);
         }
     }
 
@@ -96,7 +68,7 @@ public class TaskManager {
         taskList.add(new Deadline(deadlineParts[0],deadlineParts[1], isDone));
 
         if (printText){
-            printAddedText(taskList.get(taskList.size()-1));
+            ui.printAddedText(taskList.get(taskList.size()-1),taskList);
         }
     }
 
@@ -118,31 +90,19 @@ public class TaskManager {
         taskList.add(new Event(eventParts[0],eventParts[1],eventParts[2],isDone));
 
         if (printText) {
-            printAddedText(taskList.get(taskList.size() - 1));
+            ui.printAddedText(taskList.get(taskList.size() - 1),taskList);
         }
-    }
-
-    public void printAddedText(Task task){
-        System.out.println("    Got it. I've added this task:");
-        System.out.println("      " + task);
-        System.out.println("    Now you have " + taskList.size() + " tasks in the list.");
     }
 
     public void deleteTask(int taskId) throws InvalidTaskNumberException {
         if (taskId > taskList.size()) {
             throw new InvalidTaskNumberException(taskList.size());
         }
-        printDeletedText(taskList.get(taskId-1));
+        ui.printDeletedText(taskList.get(taskId-1));
         taskList.remove(taskId-1);
-        System.out.println("    Now you have " + taskList.size() + " tasks in the list.");
+        ui.printCurrentTaskSize(taskList);
     }
-
-    public void printDeletedText(Task task){
-        System.out.println("    Got it. I've deleted this task:");
-        System.out.println("      " + task);
-    }
-
-    public void executeByeCommand(MonFile monFile) {
+    public void executeByeCommand(Storage monFile) {
         try {
             monFile.clearFileContent();
             for (Task task : taskList) {

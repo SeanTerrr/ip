@@ -1,7 +1,5 @@
 package mon.tasktype;
 
-import mon.Task;
-
 public class ToDo extends Task {
     public ToDo(String taskName, Boolean isDone){
         super(taskName);

@@ -2,6 +2,7 @@ package mon;
 import mon.exception.InvalidDeadlineException;
 import mon.exception.InvalidEventException;
 import mon.exception.InvalidWriteCommandException;
+import mon.tasktype.Task;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,11 +10,11 @@ import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class MonFile {
+public class Storage {
     private File monFile;
     private final String dataPath = "./data/MonData.txt";
 
-    public MonFile() {
+    public Storage() {
         File dir = new File("./data"); // Separate directory creation
         if (!dir.exists()) {
             if (dir.mkdirs()) {

@@ -1,56 +1,47 @@
 package mon;
 
-import java.io.File;
 import java.util.Scanner;
 
 public class Mon {
-    public static void main(String[] args) {
-        final String botName = "Mon";
-        final String logo = "\n" +
-                "   .___  ___.   ______   .__   __. \n" +
-                "   |   \\/   |  /  __  \\  |  \\ |  | \n" +
-                "   |  \\  /  | |  |  |  | |   \\|  | \n" +
-                "   |  |\\/|  | |  |  |  | |  . `  | \n" +
-                "   |  |  |  | |  `--'  | |  |\\   | \n" +
-                "   |__|  |__|  \\______/  |__| \\__| \n" +
-                "                                \n";
-        final String horizontalLine = "   _______________________________";
-        System.out.println(horizontalLine);
-        System.out.println(logo + "    Hello! I'm " + botName + "\n" + "    What can I do for you?");
-        System.out.println(horizontalLine);
-        TaskManager taskManager = new TaskManager();
+    private final Storage storage;
+    private final Ui ui;
+    private final TaskManager taskManager;
+    private final Parser parser;
+
+    public Mon(){
+        storage = new Storage();
+        ui = new Ui();
+        taskManager = new TaskManager();
+        parser = new Parser();
+    }
+
+    public void run(){
+        ui.printWelcomeText();
         Scanner in = new Scanner(System.in);
-        MonFile monFile = new MonFile();
+        Storage storage = new Storage();
         try {
-            monFile.addDataToTaskManager(taskManager);
+            storage.addDataToTaskManager(taskManager);
 
             //main body loop
             while (true) {
                 String userInput = in.nextLine();
                 if (userInput.equals("bye")) {
-                    taskManager.executeByeCommand(monFile);
+                    taskManager.executeByeCommand(storage);
                     break;
-                } else if (userInput.equals("list")) {
-                    System.out.println(horizontalLine);
-                    taskManager.printAllTasks();
-                    System.out.println(horizontalLine);
                 } else {
-                    System.out.println(horizontalLine);
-                    taskManager.decodeCommand(userInput);
-                    System.out.println(horizontalLine);
+                    ui.printLine();
+                    parser.decodeCommand(userInput,taskManager);
+                    ui.printLine();
                 }
             }
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        printByeStatement();
+        ui.printByeStatement();
     }
 
-    public static void printByeStatement(){
-        final String horizontalLine = "   _______________________________";
-        System.out.println(horizontalLine);
-        System.out.println("    Bye! See you again!");
-        System.out.println(horizontalLine);
+    public static void main(String[] args) {
+        new Mon().run();
     }
 }

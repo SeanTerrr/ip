@@ -1,7 +1,5 @@
 package mon.tasktype;
 
-import mon.Task;
-
 public class Deadline extends Task {
     private String deadline;
     public Deadline(String taskName, String deadline, Boolean isDone){

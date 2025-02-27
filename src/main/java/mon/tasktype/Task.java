@@ -1,4 +1,4 @@
-package mon;
+package mon.tasktype;
 
 public class Task {
     protected String taskName;
