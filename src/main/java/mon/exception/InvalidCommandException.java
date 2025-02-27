@@ -1,6 +1,14 @@
 package mon.exception;
 
+/**
+ * Exception thrown when an invalid command is entered.
+ */
 public class InvalidCommandException extends Exception {
+
+    /**
+     * Constructs an {@code InvalidCommandException} with a predefined error message.
+     * The message provides guidance on correct command formats.
+     */
     public InvalidCommandException() {
         super("    Invalid command. Please use the correct format:\n" +
                 "\n    - mark <number> – Mark an item as completed" +

@@ -13,15 +13,26 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
+/**
+ * The TaskManager class manages the list of tasks, providing methods to add, delete, mark, unmark, and search for tasks.
+ * It interacts with the UI to print updates and task statuses.
+ */
 public class TaskManager {
     private Ui ui;
     private ArrayList<Task> taskList;
     private HashMap<LocalDate, ArrayList<Task>> taskMap = new HashMap<>();
+  
+    /**
+     * Constructs a TaskManager object, initializing the task list and UI.
+     */
     public TaskManager() {
         taskList = new ArrayList<>();
         ui = new Ui();
     }
 
+    /**
+     * Prints all the tasks currently in the task list.
+     */
     public void printAllTasks() {
         System.out.println("    Here are the tasks in your list:");
         for (int i = 0; i < taskList.size(); i++) {
@@ -30,6 +41,12 @@ public class TaskManager {
         }
     }
 
+    /**
+     * Marks a specific task as done based on its task ID.
+     *
+     * @param taskId The ID of the task to mark as done.
+     * @throws InvalidTaskNumberException If the task ID is invalid (greater than the size of the task list).
+     */
     public void markTaskAsDone(int taskId) throws InvalidTaskNumberException {
         if (taskId > taskList.size() || taskList.isEmpty()) {
             throw new InvalidTaskNumberException(taskList.size());
@@ -39,6 +56,12 @@ public class TaskManager {
         }
     }
 
+    /**
+     * Unmarks a specific task as done based on its task ID.
+     *
+     * @param taskId The ID of the task to unmark as done.
+     * @throws InvalidTaskNumberException If the task ID is invalid (greater than the size of the task list).
+     */
     public void unmarkTaskAsDone(int taskId) throws InvalidTaskNumberException {
         if (taskId > taskList.size() || taskList.isEmpty()) {
             throw new InvalidTaskNumberException(taskList.size());
@@ -48,6 +71,13 @@ public class TaskManager {
         }
     }
 
+    /**
+     * Adds a new ToDo task to the task list.
+     *
+     * @param description The description of the ToDo task.
+     * @param isDone The status of the task (done or not).
+     * @param printText Whether to print a confirmation message after adding the task.
+     */
     public void addTodo(String description, Boolean isDone, Boolean printText) {
         taskList.add(new ToDo(description, isDone));
         if (printText){
@@ -55,6 +85,15 @@ public class TaskManager {
         }
     }
 
+    /**
+     * Adds a new Deadline task to the task list.
+     *
+     * @param description The description of the Deadline task.
+     * @param isDone The status of the task (done or not).
+     * @param printText Whether to print a confirmation message after adding the task.
+     * @throws InvalidDeadlineException If the deadline format is invalid.
+     * @throws InvalidWriteCommandException If the write command is invalid.
+     */
     public void addDeadline(String description, Boolean isDone, Boolean printText)
             throws InvalidDeadlineException, InvalidWriteCommandException, InvalidDateTimeFormat {
         try {
@@ -84,6 +123,15 @@ public class TaskManager {
         }
     }
 
+    /**
+     * Adds a new Event task to the task list.
+     *
+     * @param description The description of the Event task.
+     * @param isDone The status of the task (done or not).
+     * @param printText Whether to print a confirmation message after adding the task.
+     * @throws InvalidEventException If the event format is invalid.
+     * @throws InvalidWriteCommandException If the write command is invalid.
+     */
     public void addEvent(String description, Boolean isDone, Boolean printText)
             throws InvalidEventException, InvalidWriteCommandException, InvalidDateTimeFormat{
         try {
@@ -112,6 +160,12 @@ public class TaskManager {
         }
     }
 
+    /**
+     * Deletes a specific task from the task list based on its task ID.
+     *
+     * @param taskId The ID of the task to delete.
+     * @throws InvalidTaskNumberException If the task ID is invalid (greater than the size of the task list).
+     */
     public void deleteTask(int taskId) throws InvalidTaskNumberException {
         if (taskId > taskList.size() || taskList.isEmpty()) {
             throw new InvalidTaskNumberException(taskList.size());
@@ -120,6 +174,12 @@ public class TaskManager {
         taskList.remove(taskId-1);
         ui.printCurrentTaskSize(taskList);
     }
+
+    /**
+     * Executes the "bye" command to save all tasks to the file and clear the file content.
+     *
+     * @param monFile The Storage instance used to handle file operations.
+     */
     public void executeByeCommand(Storage monFile) {
         try {
             monFile.clearFileContent();
@@ -131,7 +191,6 @@ public class TaskManager {
             System.out.println(e.getMessage());
         }
     }
-
     public void executeScheduleCommand(String dateString) throws InvalidDateTimeFormat{
         try {
             LocalDate date = LocalDate.parse(dateString);
@@ -152,8 +211,14 @@ public class TaskManager {
         for (int i = 0; i < taskListAtDate.size(); i++) {
             int numberCount = i + 1;
             System.out.println("    " + numberCount + "." + taskListAtDate.get(i));
-          
-    public void executeFindCommand(String keyword){
+        }
+    }
+        /**
+     * Executes the "find" command to search for tasks containing a specific keyword.
+     *
+     * @param keyword The keyword to search for in the task descriptions.
+     */
+    public void executeFindCommand(String keyword) {    
         ArrayList<Task> foundTasks = new ArrayList<>();
         for (Task task : taskList) {
             if (task.getTaskName().toLowerCase().contains(keyword.toLowerCase())) {
@@ -161,7 +226,7 @@ public class TaskManager {
             }
         }
 
-        if (foundTasks.isEmpty()){
+        if (foundTasks.isEmpty()) {
             System.out.println("    No matching tasks found!");
             return;
         }

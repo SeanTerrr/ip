@@ -1,4 +1,5 @@
 package mon;
+
 import mon.exception.InvalidDateTimeFormat;
 import mon.exception.InvalidDeadlineException;
 import mon.exception.InvalidEventException;
@@ -11,10 +12,18 @@ import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * The Storage class handles all file-related operations for saving and loading task data.
+ * It ensures the data is stored in a file and can be loaded back into the task manager upon application startup.
+ */
 public class Storage {
     private File monFile;
     private final String dataPath = "./data/MonData.txt";
 
+    /**
+     * Constructs a Storage object, initializing the data directory and file.
+     * If the directory or file doesn't exist, it creates them.
+     */
     public Storage() {
         File dir = new File("./data"); // Separate directory creation
         if (!dir.exists()) {
@@ -41,12 +50,28 @@ public class Storage {
         }
     }
 
+    /**
+     * Writes the task data to the file in a specific format.
+     *
+     * @param task The task to be written to the file.
+     * @throws IOException If an error occurs while writing to the file.
+     */
     public void writeToFile(Task task)  throws IOException {
         FileWriter fw = new FileWriter(dataPath,true);
         fw.write(task.convertToWriteFormat());
         fw.close();
     }
 
+    /**
+     * Loads data from the file and adds the tasks to the TaskManager.
+     * It parses the file content and creates the corresponding tasks based on the file format.
+     *
+     * @param taskManager The TaskManager instance to load the tasks into.
+     * @throws InvalidWriteCommandException If the file format is invalid.
+     * @throws FileNotFoundException If the file is not found.
+     * @throws InvalidEventException If an event is malformed in the file.
+     * @throws InvalidDeadlineException If a deadline is malformed in the file.
+     */
     public void addDataToTaskManager(TaskManager taskManager)
             throws InvalidWriteCommandException, FileNotFoundException,
             InvalidEventException, InvalidDeadlineException, InvalidDateTimeFormat {
@@ -63,7 +88,7 @@ public class Storage {
             Boolean isDone = taskParts[1].equals("X");
             switch (taskParts[0]) {
             case "T":
-                taskManager.addTodo(taskParts[2], isDone,false);
+                taskManager.addTodo(taskParts[2], isDone, false);
                 break;
             case "D":
                 taskManager.addDeadline(taskParts[2], isDone, false);
@@ -77,6 +102,9 @@ public class Storage {
         }
     }
 
+    /**
+     * Clears the content of the task data file.
+     */
     public void clearFileContent(){
         try {
             FileWriter fw = new FileWriter(dataPath);
