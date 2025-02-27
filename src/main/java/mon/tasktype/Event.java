@@ -1,6 +1,5 @@
 package mon.tasktype;
 
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -26,7 +25,6 @@ public class Event extends Task {
         this.eventEndTime = eventEndTime;
         this.isDone = isDone;
     }
-
 
     /**
      * Returns a string representation of the Event task.

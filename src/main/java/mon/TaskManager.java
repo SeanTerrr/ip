@@ -21,6 +21,7 @@ public class TaskManager {
     private Ui ui;
     private ArrayList<Task> taskList;
     private HashMap<LocalDate, ArrayList<Task>> taskMap = new HashMap<>();
+    private HashMap<Task, LocalDate> dateMap = new HashMap<>();
   
     /**
      * Constructs a TaskManager object, initializing the task list and UI.
@@ -115,7 +116,7 @@ public class TaskManager {
             Deadline task = new Deadline(deadlineParts[0], deadline, isDone);
             taskList.add(task);
             taskMap.computeIfAbsent(deadline, k -> new ArrayList<>()).add(task);
-
+            dateMap.computeIfAbsent(task, k -> deadline);
             if (printText) {
                 ui.printAddedText(taskList.get(taskList.size() - 1), taskList);
             }
@@ -153,6 +154,7 @@ public class TaskManager {
             Event task = new Event(eventParts[0], eventStartTime, eventEndTime, isDone);
             taskList.add(task);
             taskMap.computeIfAbsent(eventStartTime.toLocalDate(), k -> new ArrayList<>()).add(task);
+            dateMap.computeIfAbsent(task, k -> eventStartTime.toLocalDate());
 
             if (printText) {
                 ui.printAddedText(taskList.get(taskList.size() - 1), taskList);
@@ -172,8 +174,16 @@ public class TaskManager {
         if (taskId < 0 || taskId > taskList.size() || taskList.isEmpty()) {
             throw new InvalidTaskNumberException(taskList.size());
         }
+        Task taskToDelete = taskList.get(taskId-1);
+        LocalDate date = dateMap.get(taskToDelete);
+        dateMap.remove(taskToDelete);
+        taskMap.get(date).remove(taskToDelete);
+        if (taskMap.get(date).isEmpty()) {
+            taskMap.remove(date);
+        }
+
         ui.printDeletedText(taskList.get(taskId-1));
-        taskList.remove(taskId-1);
+        taskList.remove(taskToDelete);
         ui.printCurrentTaskSize(taskList);
     }
 
