@@ -49,7 +49,7 @@ public class TaskManager {
      * @throws InvalidTaskNumberException If the task ID is invalid (greater than the size of the task list or less than 0).
      */
     public void markTaskAsDone(int taskId) throws InvalidTaskNumberException {
-        if (taskId < 0 || taskId > taskList.size() || taskList.isEmpty()) {
+        if (taskId <= 0 || taskId > taskList.size() || taskList.isEmpty()) {
             throw new InvalidTaskNumberException(taskList.size());
         } else {
             taskList.get(taskId-1).markAsDone();
@@ -64,7 +64,7 @@ public class TaskManager {
      * @throws InvalidTaskNumberException If the task ID is invalid (greater than the size of the task list or less than 0).
      */
     public void unmarkTaskAsDone(int taskId) throws InvalidTaskNumberException {
-        if (taskId < 0 || taskId > taskList.size() || taskList.isEmpty()) {
+        if (taskId <= 0 || taskId > taskList.size() || taskList.isEmpty()) {
             throw new InvalidTaskNumberException(taskList.size());
         } else {
             taskList.get(taskId-1).unmarkAsDone();
@@ -171,7 +171,7 @@ public class TaskManager {
      * @throws InvalidTaskNumberException If the task ID is invalid (greater than the size of the task list or less than 0).
      */
     public void deleteTask(int taskId) throws InvalidTaskNumberException {
-        if (taskId < 0 || taskId > taskList.size() || taskList.isEmpty()) {
+        if (taskId <= 0 || taskId > taskList.size() || taskList.isEmpty()) {
             throw new InvalidTaskNumberException(taskList.size());
         }
         Task taskToDelete = taskList.get(taskId-1);
