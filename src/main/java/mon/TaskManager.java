@@ -152,6 +152,24 @@ public class TaskManager {
         for (int i = 0; i < taskListAtDate.size(); i++) {
             int numberCount = i + 1;
             System.out.println("    " + numberCount + "." + taskListAtDate.get(i));
+          
+    public void executeFindCommand(String keyword){
+        ArrayList<Task> foundTasks = new ArrayList<>();
+        for (Task task : taskList) {
+            if (task.getTaskName().toLowerCase().contains(keyword.toLowerCase())) {
+                foundTasks.add(task);
+            }
+        }
+
+        if (foundTasks.isEmpty()){
+            System.out.println("    No matching tasks found!");
+            return;
+        }
+
+        System.out.println("    Here are the matching tasks in your list:");
+        for (int i = 0; i < foundTasks.size(); i++) {
+            int numberCount = i + 1;
+            System.out.println("    " + numberCount + "." + foundTasks.get(i));
         }
     }
 }
