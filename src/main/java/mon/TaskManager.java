@@ -45,10 +45,10 @@ public class TaskManager {
      * Marks a specific task as done based on its task ID.
      *
      * @param taskId The ID of the task to mark as done.
-     * @throws InvalidTaskNumberException If the task ID is invalid (greater than the size of the task list).
+     * @throws InvalidTaskNumberException If the task ID is invalid (greater than the size of the task list or less than 0).
      */
     public void markTaskAsDone(int taskId) throws InvalidTaskNumberException {
-        if (taskId > taskList.size() || taskList.isEmpty()) {
+        if (taskId < 0 || taskId > taskList.size() || taskList.isEmpty()) {
             throw new InvalidTaskNumberException(taskList.size());
         } else {
             taskList.get(taskId-1).markAsDone();
@@ -60,10 +60,10 @@ public class TaskManager {
      * Unmarks a specific task as done based on its task ID.
      *
      * @param taskId The ID of the task to unmark as done.
-     * @throws InvalidTaskNumberException If the task ID is invalid (greater than the size of the task list).
+     * @throws InvalidTaskNumberException If the task ID is invalid (greater than the size of the task list or less than 0).
      */
     public void unmarkTaskAsDone(int taskId) throws InvalidTaskNumberException {
-        if (taskId > taskList.size() || taskList.isEmpty()) {
+        if (taskId < 0 || taskId > taskList.size() || taskList.isEmpty()) {
             throw new InvalidTaskNumberException(taskList.size());
         } else {
             taskList.get(taskId-1).unmarkAsDone();
@@ -93,6 +93,7 @@ public class TaskManager {
      * @param printText Whether to print a confirmation message after adding the task.
      * @throws InvalidDeadlineException If the deadline format is invalid.
      * @throws InvalidWriteCommandException If the write command is invalid.
+     * @throws InvalidDateTimeFormat If the date time format is invalid
      */
     public void addDeadline(String description, Boolean isDone, Boolean printText)
             throws InvalidDeadlineException, InvalidWriteCommandException, InvalidDateTimeFormat {
@@ -131,6 +132,7 @@ public class TaskManager {
      * @param printText Whether to print a confirmation message after adding the task.
      * @throws InvalidEventException If the event format is invalid.
      * @throws InvalidWriteCommandException If the write command is invalid.
+     * @throws InvalidDateTimeFormat If the date time format is invalid
      */
     public void addEvent(String description, Boolean isDone, Boolean printText)
             throws InvalidEventException, InvalidWriteCommandException, InvalidDateTimeFormat{
@@ -164,10 +166,10 @@ public class TaskManager {
      * Deletes a specific task from the task list based on its task ID.
      *
      * @param taskId The ID of the task to delete.
-     * @throws InvalidTaskNumberException If the task ID is invalid (greater than the size of the task list).
+     * @throws InvalidTaskNumberException If the task ID is invalid (greater than the size of the task list or less than 0).
      */
     public void deleteTask(int taskId) throws InvalidTaskNumberException {
-        if (taskId > taskList.size() || taskList.isEmpty()) {
+        if (taskId < 0 || taskId > taskList.size() || taskList.isEmpty()) {
             throw new InvalidTaskNumberException(taskList.size());
         }
         ui.printDeletedText(taskList.get(taskId-1));
@@ -191,7 +193,15 @@ public class TaskManager {
             System.out.println(e.getMessage());
         }
     }
-    public void executeScheduleCommand(String dateString) throws InvalidDateTimeFormat{
+
+    /**
+     * Executes the schedule command by parsing the given date string and retrieving tasks on that date.
+     * If the date format is invalid, it throws an {@link InvalidDateTimeFormat} exception.
+     *
+     * @param dateString The date string in the format "YYYY-MM-DD" to search for tasks.
+     * @throws InvalidDateTimeFormat if the provided date string is not in the valid format.
+     */
+    public void executeScheduleCommand(String dateString) throws InvalidDateTimeFormat {
         try {
             LocalDate date = LocalDate.parse(dateString);
             getAllTaskOnDate(date);
@@ -200,6 +210,11 @@ public class TaskManager {
         }
     }
 
+    /**
+     * Retrieves and displays all tasks scheduled for a specific date.
+     *
+     * @param date The {@link LocalDate} representing the date for which tasks are retrieved.
+     */
     public void getAllTaskOnDate(LocalDate date) {
         ArrayList<Task> taskListAtDate = taskMap.get(date);
         System.out.println("    Here are the tasks in your list for "
@@ -213,6 +228,7 @@ public class TaskManager {
             System.out.println("    " + numberCount + "." + taskListAtDate.get(i));
         }
     }
+
         /**
      * Executes the "find" command to search for tasks containing a specific keyword.
      *

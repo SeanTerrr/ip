@@ -71,6 +71,7 @@ public class Storage {
      * @throws FileNotFoundException If the file is not found.
      * @throws InvalidEventException If an event is malformed in the file.
      * @throws InvalidDeadlineException If a deadline is malformed in the file.
+     * @throws InvalidDateTimeFormat If the date time format is invalid
      */
     public void addDataToTaskManager(TaskManager taskManager)
             throws InvalidWriteCommandException, FileNotFoundException,
