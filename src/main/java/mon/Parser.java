@@ -2,7 +2,19 @@ package mon;
 
 import mon.exception.InvalidCommandException;
 
+/**
+ * The Parser class is responsible for decoding user input commands and directing them to the appropriate methods in the TaskManager.
+ */
 public class Parser {
+
+    /**
+     * Decodes a user command and executes the corresponding task management action.
+     * The method splits the input command into the command type and its associated data, then processes it accordingly.
+     *
+     * @param command The user input command as a string.
+     * @param taskManager The task manager responsible for managing tasks.
+     * @throws InvalidCommandException If the command is invalid or in an incorrect format.
+     */
     public void decodeCommand(String command, TaskManager taskManager) throws InvalidCommandException {
         String[] commandArray = command.split(" ", 2);
         try {

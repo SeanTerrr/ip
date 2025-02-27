@@ -2,12 +2,19 @@ package mon;
 
 import java.util.Scanner;
 
+/**
+ * Main class for running the Mon application.
+ * It initializes and coordinates the UI, task management, and command parsing.
+ */
 public class Mon {
     private final Storage storage;
     private final Ui ui;
     private final TaskManager taskManager;
     private final Parser parser;
 
+    /**
+     * Constructs the Mon application with its components: Storage, Ui, TaskManager, and Parser.
+     */
     public Mon(){
         storage = new Storage();
         ui = new Ui();
@@ -15,6 +22,10 @@ public class Mon {
         parser = new Parser();
     }
 
+    /**
+     * Runs the main application loop.
+     * Prints the welcome text, processes user input, and handles commands.
+     */
     public void run(){
         ui.printWelcomeText();
         Scanner in = new Scanner(System.in);
@@ -22,7 +33,6 @@ public class Mon {
         try {
             storage.addDataToTaskManager(taskManager);
 
-            //main body loop
             while (true) {
                 String userInput = in.nextLine();
                 if (userInput.equals("bye")) {
@@ -41,6 +51,11 @@ public class Mon {
         ui.printByeStatement();
     }
 
+    /**
+     * Main method to start the Mon application.
+     *
+     * @param args Command-line arguments.
+     */
     public static void main(String[] args) {
         new Mon().run();
     }
