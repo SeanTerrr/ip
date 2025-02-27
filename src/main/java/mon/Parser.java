@@ -26,6 +26,9 @@ public class Parser {
                 throw new InvalidCommandException();
             }
             switch (commandArray[0]) {
+            case "schedule":
+                taskManager.executeScheduleCommand(commandArray[1]);
+                break;
             case "event":
                 taskManager.addEvent(commandArray[1], false, true);
                 break;

@@ -1,4 +1,8 @@
 package mon.tasktype;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Represents a task with a deadline.
  * Inherits from the {@link Task} class.
@@ -6,14 +10,16 @@ package mon.tasktype;
 public class Deadline extends Task {
     private String deadline;
 
-    /**
-     * Creates a new Deadline task.
-     *
-     * @param taskName The name of the task.
-     * @param deadline The due date or deadline for the task.
-     * @param isDone   Whether the task is completed (true) or not (false).
-     */
-    public Deadline(String taskName, String deadline, Boolean isDone){
+/**
+* Creates a new Deadline task.
+*
+* @param taskName The name of the task.
+* @param deadline The due date or deadline for the task.
+* @param isDone   Whether the task is completed (true) or not (false).
+*/
+public class Deadline extends Task {
+    private LocalDate deadline;
+    public Deadline(String taskName, LocalDate deadline, Boolean isDone){
         super(taskName);
         this.deadline = deadline;
         this.isDone = isDone;
@@ -25,9 +31,10 @@ public class Deadline extends Task {
      *
      * @return The formatted string representing the task.
      */
+
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + deadline + ")";
+        return "[D]" + super.toString() + " (by: " + deadline.format(DateTimeFormatter.ofPattern("d MMM yyyy")) + ")";
     }
 
     /**

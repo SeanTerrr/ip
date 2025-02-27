@@ -1,12 +1,16 @@
 package mon.tasktype;
 
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Represents an event task with a start and end time.
  * Inherits from the {@link Task} class.
  */
 public class Event extends Task {
-    private String eventStartTime;
-    private String eventEndTime;
+    private LocalDateTime eventStartTime;
+    private LocalDateTime eventEndTime;
 
     /**
      * Creates a new Event task.
@@ -16,12 +20,13 @@ public class Event extends Task {
      * @param eventEndTime   The end time of the event.
      * @param isDone        Whether the event task is completed (true) or not (false).
      */
-    public Event(String eventName, String eventStartTime, String eventEndTime, Boolean isDone) {
+    public Event(String eventName, LocalDateTime eventStartTime, LocalDateTime eventEndTime, Boolean isDone) {
         super(eventName);
         this.eventStartTime = eventStartTime;
         this.eventEndTime = eventEndTime;
         this.isDone = isDone;
     }
+
 
     /**
      * Returns a string representation of the Event task.
@@ -31,7 +36,9 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + eventStartTime + " to: " + eventEndTime + ")";
+        return "[E]" + super.toString() + " (from: "
+                + eventStartTime.format(DateTimeFormatter.ofPattern("d MMM yyyy h:mma")) + " to: "
+                + eventEndTime.format(DateTimeFormatter.ofPattern("d MMM yyyy h:mma")) + ")";
     }
 
     /**
